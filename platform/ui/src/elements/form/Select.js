@@ -30,7 +30,9 @@ class Select extends Component {
     return (
       <div className="select-ohif-container">
         {this.props.label && (
-          <label className="select-ohif-label" htmlFor={this.id}>{this.props.label}</label>
+          <label className="select-ohif-color-palette" htmlFor={this.id}>
+            {this.props.label}
+          </label>
         )}
         <select className="form-control select-ohif" {...this.props}>
           {this.props.options.map(({ key, value }) => {

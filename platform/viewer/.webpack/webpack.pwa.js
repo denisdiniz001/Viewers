@@ -41,13 +41,6 @@ module.exports = (env, argv) => {
       path: DIST_DIR,
       filename: isProdBuild ? '[name].bundle.[chunkhash].js' : '[name].js',
       publicPath: PUBLIC_URL, // Used by HtmlWebPackPlugin for asset prefix
-      devtoolModuleFilenameTemplate: function(info) {
-        if (isProdBuild) {
-          return `webpack:///${info.resourcePath}`;
-        } else {
-          return 'file:///' + encodeURI(info.absoluteResourcePath);
-        }
-      },
     },
     module: {
       rules: [...extractStyleChunksRule(isProdBuild)],

@@ -1,5 +1,6 @@
 import { StudyBrowser, Thumbnail } from './studyBrowser';
 import { LayoutButton, LayoutChooser } from './layoutButton';
+import { OverlapButton } from './overlapButton';
 import { MeasurementTable, MeasurementTableItem } from './measurementTable';
 import { Overlay, OverlayTrigger } from './overlayTrigger';
 import { TableList, TableListItem } from './tableList';
@@ -35,6 +36,7 @@ export {
   ViewportDownloadForm,
   LayoutButton,
   LayoutChooser,
+  OverlapButton,
   MeasurementTable,
   MeasurementTableItem,
   Overlay,
@@ -59,5 +61,5 @@ export {
   Tooltip,
   AboutContent,
   OHIFModal,
-  ErrorPage
+  ErrorPage,
 };

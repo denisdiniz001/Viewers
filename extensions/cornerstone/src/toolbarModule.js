@@ -117,6 +117,35 @@ const definitions = [
     },
   },
   {
+    id: 'Fusion',
+    label: 'Fusion',
+    icon: 'link-circles',
+    buttons: [
+      {
+        id: 'Merge_images_pet',
+        icon: 'adjust',
+        label: 'Fusion PET',
+        type: TOOLBAR_BUTTON_TYPES.COMMAND,
+        commandName: 'fusionPetCt',
+      },
+      {
+        id: 'Merge_images_spect',
+        icon: 'adjust',
+        label: 'Fusion Spect',
+        type: TOOLBAR_BUTTON_TYPES.COMMAND,
+        commandName: 'fusionSpectCt',
+      },
+      {
+        id: 'Cancel_fusion',
+        icon: 'times',
+        label: 'Cancel Fusion',
+        type: TOOLBAR_BUTTON_TYPES.COMMAND,
+        commandName: 'cancelFusion',
+        // CustomComponent: CancelFusionToolbarButton, TODO renderizar o componente de acordo.
+      },
+    ],
+  },
+  {
     id: 'More',
     label: 'More',
     icon: 'ellipse-circle',

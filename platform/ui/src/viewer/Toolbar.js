@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SimpleToolbarButton from './SimpleToolbarButton';
 import PlayClipButton from './PlayClipButton';
 import { LayoutButton } from './../components/layoutButton';
+import { OverlapButton } from './../components/overlapButton';
 
 // TODO: This should not be built in the `@ohif/ui` component
 function getDefaultButtonData() {
@@ -117,12 +118,14 @@ export default class Toolbar extends Component {
     ).isRequired,
     includeLayoutButton: PropTypes.bool.isRequired,
     includePlayClipButton: PropTypes.bool.isRequired,
+    includeOverlapButton: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
     buttons: getDefaultButtonData(),
     includeLayoutButton: true,
     includePlayClipButton: true,
+    includeOverlapButton: true,
   };
 
   render() {
@@ -144,6 +147,7 @@ export default class Toolbar extends Component {
           })}
           {maybePlayClipButton}
           {maybeLayoutButton}
+          <OverlapButton />
         </div>
       </div>
     );

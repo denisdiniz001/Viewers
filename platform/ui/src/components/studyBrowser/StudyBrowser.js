@@ -72,7 +72,7 @@ function StudyBrowser(props) {
   );
 }
 
-const noop = () => {};
+const noop = () => { };
 
 StudyBrowser.propTypes = {
   studies: PropTypes.arrayOf(

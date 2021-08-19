@@ -5,6 +5,8 @@ import OHIF from '@ohif/core';
 import setCornerstoneLayout from './utils/setCornerstoneLayout.js';
 import { getEnabledElement } from './state';
 import CornerstoneViewportDownloadForm from './CornerstoneViewportDownloadForm';
+import FusionAlertContent from '../../../platform/viewer/src/components/FusionAlertDialog/FusionAlertContent.js';
+
 const scroll = cornerstoneTools.import('util/scroll');
 
 const { studyMetadataManager } = OHIF.utils;
@@ -13,8 +15,24 @@ const { setViewportSpecificData } = OHIF.redux.actions;
 const refreshCornerstoneViewports = () => {
   cornerstone.getEnabledElements().forEach(enabledElement => {
     if (enabledElement.image) {
-      cornerstone.updateImage(enabledElement.element);
+      cornerstone.fitToWindowupdateImage(enabledElement.element);
     }
+  });
+};
+
+const showFusionAlert = servicesManager => {
+  const { UIModalService } = servicesManager.services;
+  UIModalService.show({
+    content: FusionAlertContent,
+    title: `Forbidden action`,
+    fullscreen: false,
+    noScroll: true,
+  });
+};
+
+const fusion = (viewports, enabledFusion) => {
+  Object.values(viewports.viewportSpecificData).forEach(value => {
+    value.fusion = enabledFusion;
   });
 };
 
@@ -218,7 +236,6 @@ const commandsModule = ({ servicesManager }) => {
           }
 
           if (!elementToolInstance) {
-            console.warn('Tool not found.');
             return undefined;
           }
 
@@ -293,6 +310,26 @@ const commandsModule = ({ servicesManager }) => {
       if (refreshViewports) {
         refreshCornerstoneViewports();
       }
+    },
+    fusionPetCt: ({ viewports }) => {
+      if (viewports.numColumns !== 2 || viewports.numRows !== 1) {
+        showFusionAlert(servicesManager);
+        return;
+      }
+      fusion(viewports, true);
+      setCornerstoneLayout();
+    },
+    fusionSpectCt: ({ viewports }) => {
+      if (viewports.numColumns !== 2 || viewports.numRows !== 1) {
+        showFusionAlert(servicesManager);
+        return;
+      }
+      fusion(viewports, true);
+      setCornerstoneLayout();
+    },
+    cancelFusion: ({ viewports }) => {
+      fusion(viewports, false);
+      setCornerstoneLayout();
     },
   };
 
@@ -406,6 +443,21 @@ const commandsModule = ({ servicesManager }) => {
     },
     setWindowLevel: {
       commandFn: actions.setWindowLevel,
+      storeContexts: ['viewports'],
+      options: {},
+    },
+    fusionPetCt: {
+      commandFn: actions.fusionPetCt,
+      storeContexts: ['viewports'],
+      options: {},
+    },
+    fusionSpectCt: {
+      commandFn: actions.fusionSpectCt,
+      storeContexts: ['viewports'],
+      options: {},
+    },
+    cancelFusion: {
+      commandFn: actions.cancelFusion,
       storeContexts: ['viewports'],
       options: {},
     },

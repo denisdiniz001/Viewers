@@ -3,9 +3,12 @@ import { useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './ViewportPane.css';
+import { Select } from '@ohif/ui';
+import vtkColorMaps from '../../../../../extensions/vtk/src/ColorMaps.js';
 
 const ViewportPane = function (props) {
   const { children, onDrop, viewportIndex, className: propClassName } = props;
+  const { displaySet } = children.props.viewportData;
   const [{ hovered, highlighted }, drop] = useDrop({
     accept: 'thumbnail',
     drop: (droppedItem, monitor) => {
@@ -26,6 +29,19 @@ const ViewportPane = function (props) {
     }),
   });
 
+  const presetArray = [];
+  vtkColorMaps.rgbPresetNames.map(preset => {
+    presetArray.push({ key: preset, value: preset });
+  });
+
+  const colorPaletteComp = displaySet.fusion
+    ? renderColorPalette(presetArray)
+    : null;
+
+  const renderedChildren = displaySet.fusion
+    ? renderFusion(displaySet)
+    : children;
+
   return (
     <div
       className={classNames(
@@ -37,8 +53,34 @@ const ViewportPane = function (props) {
       ref={drop}
       data-cy={`viewport-container-${viewportIndex}`}
     >
-      {children}
+      {colorPaletteComp}
+      {renderedChildren}
     </div>
+  );
+};
+
+const renderFusion = displaySet => {
+  return (
+    <div className="display">
+      <div className="message">
+        <i className="fa fa-exclamation-triangle"></i>
+      </div>
+      <div className="info">
+        <span>Image fusion will be displayed here</span>
+      </div>
+    </div>
+  );
+};
+
+const renderColorPalette = presetArray => {
+  return (
+    <Select
+      style={{ color: 'white' }}
+      data-cy="file-type"
+      onChange={console.log}
+      options={presetArray}
+      label={'Select a color palette:'}
+    />
   );
 };
 

@@ -6,6 +6,7 @@ import RTPanel from './components/RTPanel/RTPanel';
 import { version } from '../package.json';
 
 import { utils } from '@ohif/core';
+import { copy } from 'gl-matrix/cjs/mat2';
 const { studyMetadataManager } = utils;
 
 export default {
@@ -27,7 +28,6 @@ export default {
   getPanelModule({ commandsManager, servicesManager, api }) {
     const ExtendedRTPanel = props => {
       const { activeContexts } = api.hooks.useAppContext();
-
       const contourItemClickHandler = contourData => {
         commandsManager.runCommand('jumpToImage', contourData);
       };
